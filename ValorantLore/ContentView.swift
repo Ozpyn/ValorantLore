@@ -9,16 +9,42 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            UniverseLoreView()
+                .tabItem {
+                    Label("Universe", systemImage: "globe")
+                }
+            
+            MapLoreView()
+                .tabItem {
+                    Label("Maps", systemImage: "map")
+                }
+
+            CharacterLoreView()
+                .tabItem {
+                    Label("Characters", systemImage: "person.fill")
+                }
+
+            WeaponLoreView()
+                .tabItem {
+                    Label("Weapons", systemImage: "sword")
+                }
+
+            PatchnotesView()
+                .tabItem {
+                    Label("Patchnotes", systemImage: "note.text")
+                }
+
+            TimelineView()
+                .tabItem {
+                    Label("Timeline", systemImage: "clock")
+                }
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
