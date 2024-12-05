@@ -15,9 +15,3 @@ struct ValorantLoreApp: App {
         }
     }
 }
-
-struct ValorantLoreAppView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

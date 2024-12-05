@@ -87,12 +87,6 @@ struct PatchnoteRow: View {
     }
 }
 
-struct PatchnoteRow_Previews: PreviewProvider {
-    static var previews: some View {
-        PatchnoteRow(patch: Patchnote(id: UUID(), version: "1.04", title: "Valorant Patch 1.04 - Balance Updates", releaseDate: Date(), content: "In-depth patch content for Patch 1.04 goes here."))
-    }
-}
-
 struct PatchnoteDetailView: View {
     var patch: Patchnote
     
@@ -122,11 +116,5 @@ struct PatchnoteDetailView: View {
             .padding()
         }
         .navigationTitle("Patch Details")
-    }
-}
-
-struct PatchnoteDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        PatchnoteDetailView(patch: Patchnote(id: UUID(), version: "1.04", title: "Valorant Patch 1.04 - Balance Updates", releaseDate: Date(), content: "In-depth patch content for Patch 1.04 goes here."))
     }
 }
