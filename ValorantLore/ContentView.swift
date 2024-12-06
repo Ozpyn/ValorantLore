@@ -14,11 +14,6 @@ struct ContentView: View {
                 .tabItem {
                     Label("Universe", systemImage: "globe")
                 }
-            
-            MapLoreView()
-                .tabItem {
-                    Label("Maps", systemImage: "map")
-                }
 
             CharacterLoreView()
                 .tabItem {
@@ -27,17 +22,12 @@ struct ContentView: View {
 
             WeaponLoreView()
                 .tabItem {
-                    Label("Weapons", systemImage: "sword")
+                    Label("Weapons", systemImage: "gun")
                 }
 
             PatchnotesView()
                 .tabItem {
                     Label("Patchnotes", systemImage: "note.text")
-                }
-
-            TimelineView()
-                .tabItem {
-                    Label("Timeline", systemImage: "clock")
                 }
         }
     }
