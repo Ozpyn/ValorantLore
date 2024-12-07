@@ -16,31 +16,32 @@ struct PatchnotesView: View {
     
     @State private var selectedPatch: Patchnote?
     @State private var showingPatchDetail = false
+    @State private var patchnotesLimit = 3 // Default number of patchnotes to show
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(patchnotes.sorted { $0.releaseDate > $1.releaseDate }) { patch in
-                    PatchnoteRow(patch: patch)
-                        .onTapGesture {
-                            selectedPatch = patch
-                            showingPatchDetail.toggle()
-                        }
+            VStack {
+                // Stepper to adjust the number of visible patchnotes
+                Stepper("Show \(patchnotesLimit) patchnotes", value: $patchnotesLimit, in: 1...patchnotes.count)
+                    .padding()
+                
+                List {
+                    ForEach(patchnotes.prefix(patchnotesLimit).sorted { $0.releaseDate > $1.releaseDate }) { patch in
+                        PatchnoteRow(patch: patch)
+                            .onTapGesture {
+                                selectedPatch = patch
+                                showingPatchDetail.toggle()
+                            }
+                    }
                 }
-            }
-            .navigationTitle("Patchnotes")
-            .sheet(isPresented: $showingPatchDetail) {
-                if let patch = selectedPatch {
-                    PatchnoteDetailView(patch: patch)
+                .navigationTitle("Patchnotes")
+                .sheet(isPresented: $showingPatchDetail) {
+                    if let patch = selectedPatch {
+                        PatchnoteDetailView(patch: patch)
+                    }
                 }
             }
         }
-    }
-}
-
-struct PatchnotesView_Previews: PreviewProvider {
-    static var previews: some View {
-        PatchnotesView()
     }
 }
 
@@ -116,5 +117,11 @@ struct PatchnoteDetailView: View {
             .padding()
         }
         .navigationTitle("Patch Details")
+    }
+}
+
+struct PatchnotesView_Previews: PreviewProvider {
+    static var previews: some View {
+        PatchnotesView()
     }
 }

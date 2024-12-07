@@ -15,10 +15,35 @@ struct Patchnote: Identifiable, Codable {
     var content: String
 }
 
-struct CharacterLore: Identifiable, Codable {
-    var id: UUID
+struct Role {
     var name: String
-    var background: String
-    var voiceLines: [String]
-    var emails: [String]
+    var icon: String
+    var description: String
+}
+
+struct Ability {
+    var name: String
+    var image: String // URL for the ability icon
+    var description: String
+    var gif: String? // Optional URL for ability animation GIF
+}
+
+struct Agent: Identifiable {
+    var id: Int
+    var role: Role
+    var name: String
+    var profileImage: String // URL for profile image
+    var birthDate: String
+    var placeOfOrigin: String
+    var abilities: [Ability]
+    var agentLevelRewards: [String] // Strings for agent level rewards 1-10
+}
+
+struct Map: Identifiable {
+    var id = UUID()
+    var name: String
+    var lore: String
+    var location: String
+    var numberOfSites: Int
+    var imageUrls: [String]?  // Array of image URLs (as Strings)
 }
