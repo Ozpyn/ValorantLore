@@ -206,16 +206,16 @@ let Weapons = [
     Weapon(Name: "Classic", Category: "Sidearm", Cost: 0, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Shorty", Category: "Sidearm", Cost: 0, Skins: [
+    Weapon(Name: "Shorty", Category: "Sidearm", Cost: 200, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Frenzy", Category: "Sidearm", Cost: 0, Skins: [
+    Weapon(Name: "Frenzy", Category: "Sidearm", Cost: 400, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Ghost", Category: "Sidearm", Cost: 0, Skins: [
+    Weapon(Name: "Ghost", Category: "Sidearm", Cost: 500, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Sheriff", Category: "Sidearm", Cost: 0, Skins: [
+    Weapon(Name: "Sheriff", Category: "Sidearm", Cost: 800, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
     Weapon(Name: "Golden Gun", Category: "Sidearm", Cost: 0, Skins: [
@@ -224,43 +224,43 @@ let Weapons = [
     Weapon(Name: "Snowball Launcher", Category: "Sidearm", Cost: 0, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Stinger", Category: "SMG", Cost: 0, Skins: [
+    Weapon(Name: "Stinger", Category: "SMG", Cost: 1000, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Spectre", Category: "SMG", Cost: 0, Skins: [
+    Weapon(Name: "Spectre", Category: "SMG", Cost: 1600, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Bucky", Category: "Shotgun", Cost: 0, Skins: [
+    Weapon(Name: "Bucky", Category: "Shotgun", Cost: 900, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Judge", Category: "Shotgun", Cost: 0, Skins: [
+    Weapon(Name: "Judge", Category: "Shotgun", Cost: 1500, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Bulldog", Category: "Rifle", Cost: 0, Skins: [
+    Weapon(Name: "Bulldog", Category: "Rifle", Cost: 2100, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Guardian", Category: "Rifle", Cost: 0, Skins: [
+    Weapon(Name: "Guardian", Category: "Rifle", Cost: 2700, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Phantom", Category: "Rifle", Cost: 0, Skins: [
+    Weapon(Name: "Phantom", Category: "Rifle", Cost: 2900, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Vandal", Category: "Rifle", Cost: 0, Skins: [
+    Weapon(Name: "Vandal", Category: "Rifle", Cost: 2900, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Marshal", Category: "Sniper Rifle", Cost: 0, Skins: [
+    Weapon(Name: "Marshall", Category: "Sniper Rifle", Cost: 1100, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Outlaw", Category: "Sniper Rifle", Cost: 0, Skins: [
+    Weapon(Name: "Outlaw", Category: "Sniper Rifle", Cost: 2400, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Operator", Category: "Sniper Rifle", Cost: 0, Skins: [
+    Weapon(Name: "Operator", Category: "Sniper Rifle", Cost: 4500, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Ares", Category: "Machine Gun", Cost: 0, Skins: [
+    Weapon(Name: "Ares", Category: "Machine Gun", Cost: 1600, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
-    Weapon(Name: "Odin", Category: "Machine Gun", Cost: 0, Skins: [
+    Weapon(Name: "Odin", Category: "Machine Gun", Cost: 3200, Skins: [
         Skin(Name: "Default", Images: [])
     ]),
     Weapon(Name: "Melee", Category: "Melee", Cost: 0, Skins: [
