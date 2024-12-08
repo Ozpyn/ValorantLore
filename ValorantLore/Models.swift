@@ -33,7 +33,7 @@ struct Agent: Identifiable {
     var role: Role
     var name: String
     var profileImage: String // URL for profile image
-    var birthDate: String
+    var artworkImage: String // URL for artwork image
     var placeOfOrigin: String
     var abilities: [Ability]
     var agentLevelRewards: [String] // Strings for agent level rewards 1-10
@@ -42,8 +42,28 @@ struct Agent: Identifiable {
 struct Map: Identifiable {
     var id = UUID()
     var name: String
+    var earth: String
     var lore: String
     var location: String
     var numberOfSites: Int
     var imageUrls: [String]?  // Array of image URLs (as Strings)
+}
+
+struct Weapon {
+    var Name: String
+    var Category: String
+    var Cost: Int
+    var Skins: [Skin]?
+}
+
+struct Skin {
+    var Name: String
+    var Images: [String]? //URLs for skin images / variants
+}
+
+struct TimelineEvent: Identifiable {
+    var id: Int
+    var title: String
+    var yearsAfterFirstLight: Int // Number of years after First Light (aFL)
+    var description: String
 }
