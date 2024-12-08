@@ -36,7 +36,6 @@ struct Agent: Identifiable {
     var artworkImage: String // URL for artwork image
     var placeOfOrigin: String
     var abilities: [Ability]
-    var agentLevelRewards: [String] // Strings for agent level rewards 1-10
 }
 
 struct Map: Identifiable {

@@ -30,7 +30,6 @@ struct MapLoreView: View {
                                 image
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 300, height: 300)
                                     .padding()
                                     .onAppear {
                                         cacheImage(from: images[index])  // Cache the image when it's loaded

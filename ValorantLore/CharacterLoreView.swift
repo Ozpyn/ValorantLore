@@ -55,25 +55,37 @@ struct CharacterLoreView: View {
     var agents: [Agent] = Agents  // Add your agents array here
     
     var body: some View {
-        NavigationView {
-            List(agents, id: \.id) { agent in
-                NavigationLink(destination: AgentDetailView(agents: agents, currentAgentIndex: agents.firstIndex(where: { $0.id == agent.id }) ?? 0)) {
-                    AsyncImage(url: URL(string: agent.profileImage)) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 50)
-                    } placeholder: {
-                        ProgressView()
-                            .frame(height: 50)
+            NavigationView {
+                List {
+                    ForEach(groupedAgents.keys.sorted(), id: \.self) { letter in
+                        Section(header: (Text(letter).font(.headline))) {
+                            ForEach(groupedAgents[letter] ?? [], id: \.id) { agent in
+                                NavigationLink(destination: AgentDetailView(agents: agents, currentAgentIndex: agents.firstIndex(where: { $0.id == agent.id }) ?? 0)) {
+                                    HStack {
+                                        AsyncImage(url: URL(string: agent.profileImage)) { image in
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(height: 50)
+                                        } placeholder: {
+                                            ProgressView()
+                                                .frame(height: 50)
+                                        }
+                                        Text(agent.name)
+                                            .font(.body)
+                                    }
+                                }
+                            }
+                        }
                     }
-                    Text(agent.name)
-                        .font(.headline)
                 }
+                .navigationTitle("Valorant Agents")
             }
-            .navigationTitle("Valorant Agents")
         }
-    }
+        
+        var groupedAgents: [String: [Agent]] {
+            Dictionary(grouping: agents, by: { String($0.role.name) })
+        }
 }
 
 struct AgentDetailView: View {
@@ -143,20 +155,6 @@ struct AgentDetailView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                         }
-                    }
-                }
-                .padding()
-                
-                // Agent Level Rewards
-                VStack(alignment: .leading) {
-                    Text("Agent Level Rewards")
-                        .font(.title2)
-                        .padding(.top)
-                    
-                    ForEach(agent.agentLevelRewards, id: \.self) { reward in
-                        Text(reward)
-                            .font(.subheadline)
-                            .padding(.vertical, 2)
                     }
                 }
                 .padding()

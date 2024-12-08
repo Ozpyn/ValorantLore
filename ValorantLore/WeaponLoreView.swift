@@ -50,11 +50,28 @@ struct WeaponDetailView: View {
                         ForEach(skins, id: \.Name) { skin in
                             VStack {
                                 Text(skin.Name)
-                                ForEach(skin.Images ?? [], id: \.self) { _ in
-                                    Image(systemName: "photo") // Placeholder image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 80, height: 80)
+                                
+                                // Display skin images from URLs
+                                ForEach(skin.Images ?? [], id: \.self) { imageUrl in
+                                    AsyncImage(url: URL(string: imageUrl)) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView() // Show a loading indicator
+                                                .frame(width: 80, height: 80)
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 80, height: 80)
+                                        case .failure:
+                                            Image(systemName: "photo") // Fallback image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 80, height: 80)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -66,6 +83,7 @@ struct WeaponDetailView: View {
         .navigationTitle(weapon.Name)
     }
 }
+
 
 struct WeaponLoreView_Previews: PreviewProvider {
     static var previews: some View {
