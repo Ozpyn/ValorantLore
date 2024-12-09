@@ -113,6 +113,7 @@ struct MapLoreView: View {
         // Check if the image is already cached
         if let cachedResponse = urlCache.cachedResponse(for: URLRequest(url: url)) {
             print("Image is cached.")
+            print(cachedResponse)
             return
         }
         

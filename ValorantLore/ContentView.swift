@@ -27,7 +27,7 @@ struct ContentView: View {
 
             WeaponLoreView()
                 .tabItem {
-                    Label("Weapons", systemImage: "gun")
+                    Label("Weapons", systemImage: "scissors")
                 }
                 .tag(2)
 

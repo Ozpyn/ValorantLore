@@ -25,7 +25,6 @@ struct TimelineView: View {
                     
                     Text(event.description)
                         .font(.body)
-                        .lineLimit(2) // To prevent overflow
                         .foregroundColor(.secondary)
                     
                     Divider()

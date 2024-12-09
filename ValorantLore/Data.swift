@@ -6,6 +6,8 @@
 //
 //  Note: I don't think storing data like this is good practice, but I dont have the patience to set up a rest API.
 
+import SwiftUI
+
 let Maps = [
     Map(name: "Abyss", earth: "Alpha", lore: "", location: "Norway", numberOfSites: 2, imageUrls: ["https://static.wikia.nocookie.net/valorant-lore/images/6/61/Loading_Screen_Abyss.png", "https://static.wikia.nocookie.net/valorant-lore/images/5/5f/Abyss_minimap.png", ""]),
     Map(name: "Ascent", earth: "Alpha", lore: "", location: "San Marco, Italy", numberOfSites: 2, imageUrls: ["https://static.wikia.nocookie.net/valorant/images/e/e7/Loading_Screen_Ascent.png", "https://static.wikia.nocookie.net/valorant/images/0/04/Ascent_minimap.png"]),
@@ -256,3 +258,37 @@ let Weapons = [
 let Events: [TimelineEvent] = [
     TimelineEvent(id: 1, title: "First Light", yearsAfterFirstLight: 0, description: "A global event, soon after which the corporation 'Kingdom' discovered Radianite. This event led to rapid and incredible changes across the globe, including advancements in science and technology, vast changes in everyday life and society, and the appearance of Radiants: gifted individuals with hypernatural powers. Soon after this event, Kingdom rapidly rose in power due to their expert harnessing of radianite and its properties, becoming a megacorporation with near-universal influence. Most elements in VALORANT's world that differ greatly from today's real world can be traced back to this event.Some theories place First Light at the point of divergence between the two Earths as well. While hints that could be interpreted to support this have been dropped recently, the theory still remains unconfirmed.")
     ]
+
+func parseReleaseDate(from value: Any) -> Date {
+    if let dateString = value as? String {
+        // If value is a date string, try to convert it to Date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust format as needed
+        if let date = dateFormatter.date(from: dateString) {
+            return date
+        } else {
+            fatalError("Invalid date string format. Expected format: yyyy-MM-dd")
+        }
+    } else if let daysAgo = value as? Int {
+        // If value is an integer, assume it's a number of days relative to today
+        return Calendar.current.date(byAdding: .day, value: daysAgo, to: Date())!
+    } else {
+        fatalError("Invalid input for releaseDate. Expected a String or Int.")
+    }
+}
+
+let patchNoteDefaultLink = "https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-"
+
+var Patchnotes: [Patchnote] = [
+    Patchnote(id: UUID(), version: "9.10", title: "VALORANT PATCH NOTES 9.10", releaseDate: parseReleaseDate(from: "2024-11-19"), content: patchNoteDefaultLink + "9-10/"),
+    Patchnote(id: UUID(), version: "9.09", title: "VALORANT PATCH NOTES 9.09", releaseDate: parseReleaseDate(from: "2024-11-5"), content: patchNoteDefaultLink + "9-09/"),
+    Patchnote(id: UUID(), version: "9.08", title: "VALORANT PATCH NOTES 9.08", releaseDate: parseReleaseDate(from: "2024-10-22"), content: patchNoteDefaultLink + "9-08/"),
+    Patchnote(id: UUID(), version: "9.07", title: "VALORANT PATCH NOTES 9.07", releaseDate: parseReleaseDate(from: "2024-10-8"), content: patchNoteDefaultLink + "9-07/"),
+    Patchnote(id: UUID(), version: "9.06", title: "VALORANT PATCH NOTES 9.06", releaseDate: parseReleaseDate(from: "2024-9-24"), content: patchNoteDefaultLink + "906/"),
+    Patchnote(id: UUID(), version: "9.05", title: "VALORANT PATCH NOTES 9.05", releaseDate: parseReleaseDate(from: "2024-9-10"), content: patchNoteDefaultLink + "9-05/"),
+    Patchnote(id: UUID(), version: "9.04", title: "VALORANT PATCH NOTES 9.04", releaseDate: parseReleaseDate(from: "2024-8-27"), content: patchNoteDefaultLink + "9-04/"),
+    Patchnote(id: UUID(), version: "9.03", title: "VALORANT PATCH NOTES 9.03", releaseDate: parseReleaseDate(from: "2024-8-13"), content: patchNoteDefaultLink + "9-03/"),
+    Patchnote(id: UUID(), version: "9.02", title: "VALORANT PATCH NOTES 9.02", releaseDate: parseReleaseDate(from: "2024-7-30"), content: patchNoteDefaultLink + "902/"),
+    Patchnote(id: UUID(), version: "9.01", title: "VALORANT PATCH NOTES 9.01", releaseDate: parseReleaseDate(from: "2024-7-16"), content: patchNoteDefaultLink + "901/"),
+    Patchnote(id: UUID(), version: "9.0", title: "VALORANT PATCH NOTES 9.0", releaseDate: parseReleaseDate(from: "2024-6-25"), content: patchNoteDefaultLink + "9-0/")
+]

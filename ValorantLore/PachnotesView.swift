@@ -6,15 +6,25 @@
 //
 
 import SwiftUI
+import WebKit
+
+// WebView to load URLs inside the modal
+struct PatchnoteWebView: UIViewRepresentable {
+    let url: URL
+    
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        return webView
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(URLRequest(url: url))
+    }
+}
+
+var selectedPatch: Patchnote?
 
 struct PatchnotesView: View {
-    @State private var patchnotes: [Patchnote] = [
-        Patchnote(id: UUID(), version: "1.04", title: "Valorant Patch 1.04 - Balance Updates", releaseDate: Date(), content: "In-depth patch content for Patch 1.04 goes here."),
-        Patchnote(id: UUID(), version: "1.03", title: "Valorant Patch 1.03 - Bug Fixes", releaseDate: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, content: "In-depth patch content for Patch 1.03 goes here."),
-        Patchnote(id: UUID(), version: "1.02", title: "Valorant Patch 1.02 - Agent Updates", releaseDate: Calendar.current.date(byAdding: .day, value: -5, to: Date())!, content: "In-depth patch content for Patch 1.02 goes here.")
-    ]
-    
-    @State private var selectedPatch: Patchnote?
     @State private var showingPatchDetail = false
     @State private var patchnotesLimit = 3 // Default number of patchnotes to show
     
@@ -22,11 +32,11 @@ struct PatchnotesView: View {
         NavigationView {
             VStack {
                 // Stepper to adjust the number of visible patchnotes
-                Stepper("Show \(patchnotesLimit) patchnotes", value: $patchnotesLimit, in: 1...patchnotes.count)
+                Stepper("Show \(patchnotesLimit) patchnotes", value: $patchnotesLimit, in: 1...Patchnotes.count)
                     .padding()
                 
                 List {
-                    ForEach(patchnotes.prefix(patchnotesLimit).sorted { $0.releaseDate > $1.releaseDate }) { patch in
+                    ForEach(Patchnotes.prefix(patchnotesLimit).sorted { $0.releaseDate > $1.releaseDate }) { patch in
                         PatchnoteRow(patch: patch)
                             .onTapGesture {
                                 selectedPatch = patch
@@ -92,31 +102,20 @@ struct PatchnoteDetailView: View {
     var patch: Patchnote
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text(patch.title)
-                    .font(.title)
-                    .fontWeight(.bold)
-                
-                Text("Version: \(patch.version)")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                
-                Text(patch.releaseDate, style: .date)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                
-                Divider()
-                
-                Text(patch.content)
-                    .font(.body)
-                    .lineSpacing(6)
-                
-                Spacer()
+        VStack {
+            if let url = URL(string: patch.content), UIApplication.shared.canOpenURL(url) {
+                // If content is a valid URL, display the WebView
+                WebView(url: url)
+                    .edgesIgnoringSafeArea(.all) // Make the web view occupy the entire screen
+            } else {
+                Text("Invalid URL")
+                    .font(.headline)
+                    .foregroundColor(.red)
+                    .padding()
             }
-            .padding()
         }
         .navigationTitle("Patch Details")
+        .navigationBarHidden(true)  // Hide the navigation bar for a full-screen experience
     }
 }
 

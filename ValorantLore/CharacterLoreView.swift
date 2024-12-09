@@ -8,6 +8,8 @@
 import SwiftUI
 import WebKit
 
+var selectedAbility = AbilityNil
+
 // Struct to handle image caching
 class ImageCache {
     static let shared = ImageCache()
@@ -55,43 +57,66 @@ struct CharacterLoreView: View {
     var agents: [Agent] = Agents  // Add your agents array here
     
     var body: some View {
-            NavigationView {
-                List {
-                    ForEach(groupedAgents.keys.sorted(), id: \.self) { letter in
-                        Section(header: (Text(letter).font(.headline))) {
-                            ForEach(groupedAgents[letter] ?? [], id: \.id) { agent in
-                                NavigationLink(destination: AgentDetailView(agents: agents, currentAgentIndex: agents.firstIndex(where: { $0.id == agent.id }) ?? 0)) {
-                                    HStack {
-                                        AsyncImage(url: URL(string: agent.profileImage)) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(height: 50)
-                                        } placeholder: {
-                                            ProgressView()
-                                                .frame(height: 50)
-                                        }
-                                        Text(agent.name)
-                                            .font(.body)
-                                    }
+        NavigationView {
+            List {
+                ForEach(groupedAgents.keys.sorted(), id: \.self) { letter in
+                    Section(header: (Text(letter).font(.headline))) {
+                        ForEach(groupedAgents[letter] ?? [], id: \.id) { agent in
+                            NavigationLink(destination: AgentDetailView(agents: agents, currentAgentIndex: agents.firstIndex(where: { $0.id == agent.id }) ?? 0)) {
+                                HStack {
+                                    // Use ImageCache to load the agent profile image
+                                    AgentImage(url: URL(string: agent.profileImage))
+                                        .frame(height: 50)
+                                    
+                                    Text(agent.name)
+                                        .font(.body)
                                 }
                             }
                         }
                     }
                 }
-                .navigationTitle("Valorant Agents")
+            }
+            .navigationTitle("Valorant Agents")
+        }
+    }
+    
+    var groupedAgents: [String: [Agent]] {
+        Dictionary(grouping: agents, by: { String($0.role.name) })
+    }
+}
+
+struct AgentImage: View {
+    var url: URL?
+    @State private var loadedImage: UIImage?
+    
+    var body: some View {
+        Group {
+            if let image = loadedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                ProgressView()
+                    .onAppear {
+                        loadImage()
+                    }
             }
         }
-        
-        var groupedAgents: [String: [Agent]] {
-            Dictionary(grouping: agents, by: { String($0.role.name) })
+    }
+    
+    private func loadImage() {
+        guard let url = url else { return }
+        ImageCache.shared.loadImage(from: url) { image in
+            DispatchQueue.main.async {
+                self.loadedImage = image
+            }
         }
+    }
 }
 
 struct AgentDetailView: View {
     var agents: [Agent]
     @State private var currentAgentIndex: Int
-    @State private var selectedAbility: Ability? = nil
     @State private var isAbilityModalPresented: Bool = false
     
     init(agents: [Agent], currentAgentIndex: Int) {
@@ -104,17 +129,10 @@ struct AgentDetailView: View {
         
         ScrollView {
             VStack {
-                // Agent Profile Image
-                AsyncImage(url: URL(string: agent.artworkImage)) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 300)
-                        .padding()
-                } placeholder: {
-                    ProgressView()
-                        .frame(height: 300)
-                }
+                // Use ImageCache to load the agent's artwork image
+                AgentImage(url: URL(string: agent.artworkImage))
+                    .frame(height: 300)
+                    .padding()
                 
                 Text(agent.name)
                     .font(.largeTitle)
@@ -132,18 +150,14 @@ struct AgentDetailView: View {
                     ForEach(agent.abilities, id: \.name) { ability in
                         Button(action: {
                             selectedAbility = ability
-                            isAbilityModalPresented.toggle()
+                            DispatchQueue.main.async {
+                                isAbilityModalPresented.toggle()
+                            }
                         }) {
                             HStack {
-                                AsyncImage(url: URL(string: ability.image)) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 50, height: 50)
-                                } placeholder: {
-                                    ProgressView()
-                                        .frame(width: 50, height: 50)
-                                }
+                                // Use ImageCache to load ability image
+                                AgentImage(url: URL(string: ability.image))
+                                    .frame(width: 50, height: 50)
                                 
                                 Text(ability.name)
                                     .font(.headline)
@@ -172,9 +186,7 @@ struct AgentDetailView: View {
         )
         .navigationTitle(agent.name)
         .sheet(isPresented: $isAbilityModalPresented) {
-            if let selectedAbility = selectedAbility {
-                AbilityDetailView(ability: selectedAbility)
-            }
+            AbilityDetailView()
         }
     }
     
@@ -188,7 +200,7 @@ struct AgentDetailView: View {
 }
 
 struct AbilityDetailView: View {
-    var ability: Ability
+    var ability = selectedAbility
     @State private var gifLoaded: Bool = true
     
     var body: some View {

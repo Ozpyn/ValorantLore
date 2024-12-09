@@ -12,7 +12,7 @@ struct Patchnote: Identifiable, Codable {
     var version: String
     var title: String
     var releaseDate: Date
-    var content: String
+    var content: String // its a URL to the patchnotes website
 }
 
 struct Role {
@@ -27,6 +27,8 @@ struct Ability {
     var description: String
     var gif: String? // Optional URL for ability animation GIF
 }
+
+let AbilityNil = Ability(name: "", image: "", description: "", gif: "")
 
 struct Agent: Identifiable {
     var id: Int
